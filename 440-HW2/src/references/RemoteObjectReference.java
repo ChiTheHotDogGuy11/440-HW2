@@ -1,5 +1,7 @@
 package references;
 
+import stub.RemoteStub440;
+
 public class RemoteObjectReference {
 	
 	private String IP_address;
@@ -14,10 +16,10 @@ public class RemoteObjectReference {
 		this.RI_name = RI_name;
 	}
 	
-	public Object localize() {
+	public RemoteStub440 localize() {
 		String stub_name = "examples." + RI_name + "_Stub";
 		Class<?> c = null;
-		Object o = null;
+		RemoteStub440 o = null;
 		
 		try {
 			c = Class.forName(stub_name);
@@ -26,13 +28,13 @@ public class RemoteObjectReference {
 		}
 		
 		try {
-			o = c.newInstance();
+			o = (RemoteStub440)c.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		
+		o.setROR(this);
 		return o;
 	}
 	
