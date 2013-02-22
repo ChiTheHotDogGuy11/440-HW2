@@ -15,7 +15,7 @@ public class RemoteObjectReference {
 	}
 	
 	public Object localize() {
-		String stub_name = RI_name + "_Stub";
+		String stub_name = "examples." + RI_name + "_Stub";
 		Class<?> c = null;
 		Object o = null;
 		
