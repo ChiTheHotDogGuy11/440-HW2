@@ -1,25 +1,22 @@
 package examples;
 
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-import examples.HelloInterface;
 import references.RemoteObjectReference;
 import stub.Remote440;
 import stub.RemoteException440;
 import stub.RemoteStub440;
 
-public final class HelloInterface_Stub extends RemoteStub440
-	implements HelloInterface, Remote440 {
+public final class HelloServer_Stub extends RemoteStub440
+	implements HelloServer, Remote440 {
 
-	public HelloInterface_Stub() {
+	public HelloServer_Stub() {
 	}
 	
-	public HelloInterface_Stub(RemoteObjectReference ROR) {
+	public HelloServer_Stub(RemoteObjectReference ROR) {
 		super(ROR);
 	}
 	
@@ -27,6 +24,7 @@ public final class HelloInterface_Stub extends RemoteStub440
 		Socket sock;
 		ObjectOutputStream out;
 		ObjectInputStream in;
+		
 		try {
 			sock = new Socket(super.getIP(), super.getPortName());
 			System.out.println("HERE");
