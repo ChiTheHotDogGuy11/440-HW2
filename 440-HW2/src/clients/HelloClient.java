@@ -1,7 +1,11 @@
 package clients;
 
+import java.io.IOException;
+
 import examples.HelloServer;
 import references.RemoteObjectReference;
+import registry.LocateSimpleRegistry;
+import registry.SimpleRegistry;
 import stub.RemoteException440;
 
 public class HelloClient {
@@ -21,11 +25,14 @@ public class HelloClient {
 
 		// locate the registry and get ror.
 		SimpleRegistry sr = LocateSimpleRegistry.getRegistry(host, port);
-		RemoteObjectRef ror = sr.lookup(serviceName);
+		RemoteObjectReference ror = null;
+		try {
+			ror = sr.lookup(serviceName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-		RemoteObjectReference ror = new RemoteObjectReference("128.128.128.128", 1234, 0xdeadbeef, "HelloInterface");
 		HelloServer hi = (HelloServer) ror.localize();
 		System.out.println(hi.sayHello("Billy Bob"));
 	}
-
 }
