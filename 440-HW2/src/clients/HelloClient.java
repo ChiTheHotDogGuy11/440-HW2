@@ -1,11 +1,7 @@
 package clients;
 
-import java.io.IOException;
-
 import examples.HelloServer;
 import references.RemoteObjectReference;
-import registry.LocateSimpleRegistry;
-import registry.SimpleRegistry;
 import stub.RemoteException440;
 
 public class HelloClient {
@@ -25,7 +21,7 @@ public class HelloClient {
 
 		// locate the registry and get ror.
 		//SimpleRegistry sr = LocateSimpleRegistry.getRegistry(host, port);
-		RemoteObjectReference ror = new RemoteObjectReference("128.128.128.128", 23, 76, "HelloServer");
+		RemoteObjectReference ror = new RemoteObjectReference("128.237.114.224", 1234, 0, "HelloServer");
 		/*try {
 			ror = sr.lookup(serviceName);
 		} catch (IOException e) {
