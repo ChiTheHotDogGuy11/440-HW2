@@ -19,16 +19,16 @@ public class RMI440 {
     // As you can see, the exception handling is not done at all.
     public static void main(String args[]) throws Exception {
 		String InitialClassName = args[0];
-		String registryHost = args[1];
+		/*String registryHost = args[1];
 		int registryPort = Integer.parseInt(args[2]);	
-		String serviceName = args[3];
+		String serviceName = args[3];*/
 	
 		// it should have its own port. assume you hardwire it.
 		host = (InetAddress.getLocalHost()).getHostName();
-		port = 12345;
+		port = 1234;
 		
 		//create the registry
-		SimpleRegistry reg = new SimpleRegistry(registryHost, registryPort);
+		//SimpleRegistry reg = new SimpleRegistry(registryHost, registryPort);
 	
 		// it now have two classes from MainClassName: 
 		// (1) the class itself (say ZipCpdeServerImpl) and
@@ -46,7 +46,7 @@ public class RMI440 {
 		
 		// then register it into the table.
 		RemoteObjectReference initROR = tbl.addObj(host, port, o);
-		reg.rebind(initROR.getRIName(), initROR);
+		//reg.rebind(serviceName, initROR);
 	
 		// create a socket.
 		ServerSocket serverSoc = new ServerSocket(port);
