@@ -7,6 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import references.RORTable440;
+import references.RemoteObjectReference;
+import registry.SimpleRegistry;
 
 public class RMI440 {
     static String host;
@@ -24,6 +26,9 @@ public class RMI440 {
 		// it should have its own port. assume you hardwire it.
 		host = (InetAddress.getLocalHost()).getHostName();
 		port = 12345;
+		
+		//create the registry
+		SimpleRegistry reg = new SimpleRegistry(registryHost, registryPort);
 	
 		// it now have two classes from MainClassName: 
 		// (1) the class itself (say ZipCpdeServerImpl) and
@@ -40,7 +45,8 @@ public class RMI440 {
 		Object o = initialclass.newInstance();
 		
 		// then register it into the table.
-		tbl.addObj(host, port, o);
+		RemoteObjectReference initROR = tbl.addObj(host, port, o);
+		reg.rebind(initROR.getRIName(), initROR);
 	
 		// create a socket.
 		ServerSocket serverSoc = new ServerSocket(port);
@@ -72,6 +78,8 @@ public class RMI440 {
 			ObjectInputStream ois = new ObjectInputStream(soc.getInputStream());
 			
 			RMIMessage message = (RMIMessage) ois.readObject();
+			int key = message.getObjectKey();
+			tbl.findObj(key);
 		}
     }
 }
