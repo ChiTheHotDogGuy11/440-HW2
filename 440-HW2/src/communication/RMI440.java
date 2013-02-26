@@ -79,7 +79,8 @@ public class RMI440 {
 			
 			RMIMessage message = (RMIMessage) ois.readObject();
 			int key = message.getObjectKey();
-			tbl.findObj(key);
+			Object obj = tbl.findObj(key);
+			System.out.println("Object found!");
 		}
     }
 }
