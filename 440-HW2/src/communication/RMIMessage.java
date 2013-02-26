@@ -1,7 +1,6 @@
 package communication;
 
 public class RMIMessage {
-<<<<<<< HEAD
 	private String methodName;
 	private Object[] parameters;
 	private int objectKey;
@@ -32,7 +31,4 @@ public class RMIMessage {
 	public Object getReturnValue() {
 		return returnValue;
 	}
-=======
-	
->>>>>>> Updated RMI440
 }
