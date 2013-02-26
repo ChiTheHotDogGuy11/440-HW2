@@ -3,6 +3,8 @@ package communication;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
+import references.RORTable440;
+
 public class RMI440 {
     static String host;
     static int port;
@@ -29,12 +31,13 @@ public class RMI440 {
 		// you should also create a remote object table here.
 		// it is a table of a ROR and a skeleton.
 		// as a hint, I give such a table's interface as RORtbl.java.
+		RORTable440 tbl = new RORTable440();
 		
 		// after that, you create one remote object of initialclass.
 		Object o = initialclass.newInstance();
 		
 		// then register it into the table.
-		//tbl.addObj(host, port, o);
+		tbl.addObj(host, port, o);
 	
 		// create a socket.
 		ServerSocket serverSoc = new ServerSocket(port);
