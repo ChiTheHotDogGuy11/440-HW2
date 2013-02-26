@@ -3,11 +3,13 @@ package communication;
 public class RMIMessage {
 	private String methodName;
 	private Object[] parameters;
+	private int objectKey;
 	private Object returnValue = null;
 	
-	public RMIMessage(String methodName, Object[] parameters) {
+	public RMIMessage(String methodName, Object[] parameters, int objectKey) {
 		this.methodName = methodName;
 		this.parameters = parameters;
+		this.objectKey = objectKey;
 	}
 	
 	public void setReturnValue(Object returnValue) {
@@ -20,6 +22,10 @@ public class RMIMessage {
 	
 	public Object[] getParemeters() {
 		return parameters;
+	}
+	
+	public int getObjectKey() {
+		return objectKey;
 	}
 	
 	public Object getReturnValue() {

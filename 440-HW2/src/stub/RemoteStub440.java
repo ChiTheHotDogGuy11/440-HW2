@@ -26,4 +26,8 @@ public class RemoteStub440 implements Serializable, Remote440 {
 	public String getIP() {
 		return ROR.getIP();
 	}
+	
+	public int getObjectKey() {
+		return ROR.getObjectKey();
+	}
 }
