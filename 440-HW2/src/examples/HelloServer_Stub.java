@@ -5,6 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import communication.RMIMessage;
+
 import references.RemoteObjectReference;
 import stub.Remote440;
 import stub.RemoteException440;
@@ -24,20 +27,21 @@ public final class HelloServer_Stub extends RemoteStub440
 		Socket sock;
 		ObjectOutputStream out;
 		ObjectInputStream in;
+		RMIMessage methodRequest = null;
+		Object[] params = new Object[1];
+		params[0] = nameOfPerson;
 		
 		try {
+			methodRequest = new RMIMessage("sayHello", params);
 			sock = new Socket(super.getIP(), super.getPortName());
-			System.out.println("HERE");
 			out = new ObjectOutputStream(sock.getOutputStream());
 			in = new ObjectInputStream(sock.getInputStream());	
-			out.writeObject("sayHello");
-			out.writeObject(nameOfPerson);
-			out.writeObject("END OF INPUT");
-			String result = (String)(in.readObject());
+			out.writeObject(methodRequest);
+			RMIMessage resultMessage = (RMIMessage)(in.readObject());
 			out.close();
 			in.close();
 			sock.close();
-			return result;
+			return (String)resultMessage.getReturnValue();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
