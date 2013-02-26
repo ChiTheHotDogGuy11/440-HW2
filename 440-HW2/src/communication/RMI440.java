@@ -18,13 +18,13 @@ public class RMI440 {
     // reference to the remote object.
     // As you can see, the exception handling is not done at all.
     public static void main(String args[]) throws Exception {
-		String InitialClassName = args[0];
+		String InitialClassName = "examples.HelloServerImpl";
 		/*String registryHost = args[1];
 		int registryPort = Integer.parseInt(args[2]);	
 		String serviceName = args[3];*/
 	
 		// it should have its own port. assume you hardwire it.
-		host = (InetAddress.getLocalHost()).getHostName();
+		host = "128.237.198.29";
 		port = 1234;
 		
 		//create the registry
@@ -34,7 +34,7 @@ public class RMI440 {
 		// (1) the class itself (say ZipCpdeServerImpl) and
 		// (2) its skeleton.
 		Class<?> initialclass = Class.forName(InitialClassName);
-		Class<?> initialskeleton = Class.forName(InitialClassName+"_skel");
+		//Class<?> initialskeleton = Class.forName(InitialClassName+"_skel");
 		
 		// you should also create a remote object table here.
 		// it is a table of a ROR and a skeleton.

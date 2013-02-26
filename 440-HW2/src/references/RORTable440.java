@@ -22,8 +22,7 @@ public class RORTable440 {
 	 // The host and port are not used unless it is exported outside.
 	 // In any way, it is better to have it for uniformity.
 	 public RemoteObjectReference addObj(String host, int port, Object o) {
-		 String[] interfaceNameComponents = o.getClass().getInterfaces()[0].getCanonicalName().split(".");
-		 String interfaceName = interfaceNameComponents[interfaceNameComponents.length - 1];
+		 String interfaceName = o.getClass().getInterfaces()[0].getCanonicalName();
 		 RemoteObjectReference newROR = new RemoteObjectReference(host, port, nextKey, interfaceName);
 		 hm.put(nextKey, o);
 		 nextKey += 1;

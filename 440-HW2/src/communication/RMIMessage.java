@@ -1,6 +1,8 @@
 package communication;
 
-public class RMIMessage {
+import java.io.Serializable;
+
+public class RMIMessage implements Serializable{
 	private String methodName;
 	private Object[] parameters;
 	private int objectKey;
