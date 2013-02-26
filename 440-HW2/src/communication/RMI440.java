@@ -1,7 +1,10 @@
 package communication;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 import references.RORTable440;
 
@@ -63,6 +66,12 @@ public class RMI440 {
 			//     you should marshal it here) and send it out to the 
 			//     the source of the invoker.
 			// (7) closes the socket.
+			
+			Socket soc = serverSoc.accept();
+			ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
+			ObjectInputStream ois = new ObjectInputStream(soc.getInputStream());
+			
+			RMIMessage message = (RMIMessage) ois.readObject();
 		}
     }
 }
