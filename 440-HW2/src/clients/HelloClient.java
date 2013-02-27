@@ -1,6 +1,5 @@
 package clients;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import examples.HelloServer;

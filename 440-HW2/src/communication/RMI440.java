@@ -81,16 +81,20 @@ public class RMI440 {
 			RMIMessage message = (RMIMessage) ois.readObject();
 			int key = message.getObjectKey();
 			Object obj = tbl.findObj(key);
-			System.out.println("Object found!");
-			System.out.println(message.getMethodName());
+			
 			Object[] parameters = message.getParemeters();
 			Class[] paramClasses = new Class[parameters.length];
 			for (int i = 0; i < parameters.length; i++) {
 				paramClasses[i] = parameters[i].getClass();
 			}
 			Method method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
-			String result = (String)method.invoke(obj, message.getParemeters());
-			System.out.println(result);
+			Object result = method.invoke(obj, message.getParemeters());
+			message.setReturnValue(result);
+			oos.writeObject(message);
+			
+			ois.close();
+			oos.close();
+			soc.close();
 		}
     }
 }
