@@ -25,7 +25,7 @@ public class RMI440 {
 		String serviceName = args[3];*/
 	
 		// it should have its own port. assume you hardwire it.
-		host = "128.237.198.29";
+		host = "128.237.114.224";
 		port = 1234;
 		
 		//create the registry
