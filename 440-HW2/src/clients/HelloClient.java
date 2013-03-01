@@ -32,6 +32,6 @@ public class HelloClient {
 		}*/
 		
 		HelloServer hi = (HelloServer) ror.localize();
-		System.out.println(hi.sayHello("Billy Bob"));
+		System.out.println(hi.sayHello(""));
 	}
 }

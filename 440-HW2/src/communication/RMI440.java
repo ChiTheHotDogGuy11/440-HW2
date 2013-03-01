@@ -87,9 +87,16 @@ public class RMI440 {
 			for (int i = 0; i < parameters.length; i++) {
 				paramClasses[i] = parameters[i].getClass();
 			}
-			Method method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
-			Object result = method.invoke(obj, message.getParemeters());
-			message.setReturnValue(result);
+			
+			try {
+				Method method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
+				Object result = method.invoke(obj, message.getParemeters());
+				message.setReturnValue(result);
+			} catch (Exception e) {
+				e.printStackTrace();
+				message.addException(e);
+			}
+			
 			oos.writeObject(message);
 			
 			ois.close();

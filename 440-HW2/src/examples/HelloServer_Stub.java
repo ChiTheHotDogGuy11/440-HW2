@@ -43,6 +43,7 @@ public final class HelloServer_Stub extends RemoteStub440
 			in.close();
 			sock.close();
 			
+			resultMessage.printStackTraces();
 			return (String)resultMessage.getReturnValue();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

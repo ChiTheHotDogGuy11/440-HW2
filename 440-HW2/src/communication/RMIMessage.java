@@ -1,12 +1,14 @@
 package communication;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class RMIMessage implements Serializable{
 	private String methodName;
 	private Object[] parameters;
 	private int objectKey;
 	private Object returnValue = null;
+	private ArrayList<Exception> exceptions = new ArrayList<Exception>();
 	
 	public RMIMessage(String methodName, Object[] parameters, int objectKey) {
 		this.methodName = methodName;
@@ -32,5 +34,19 @@ public class RMIMessage implements Serializable{
 	
 	public Object getReturnValue() {
 		return returnValue;
+	}
+	
+	public ArrayList<Exception> getExceptions() {
+		return exceptions;
+	}
+	
+	public void printStackTraces() {
+		for (int i = 0; i < exceptions.size(); i++) {
+			exceptions.get(i).printStackTrace();
+		}
+	}
+	
+	public void addException(Exception e) {
+		exceptions.add(e);
 	}
 }
