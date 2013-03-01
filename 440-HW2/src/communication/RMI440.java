@@ -1,5 +1,6 @@
 package communication;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
@@ -18,7 +19,7 @@ public class RMI440 {
     // It will use a hash table, which contains ROR together with
     // reference to the remote object.
     // As you can see, the exception handling is not done at all.
-    public static void main(String args[]) throws Exception {
+    public static void main(String args[]) {
 		String InitialClassName = "examples.HelloServerImpl";
 		/*String registryHost = args[1];
 		int registryPort = Integer.parseInt(args[2]);	
@@ -34,7 +35,13 @@ public class RMI440 {
 		// it now have two classes from MainClassName: 
 		// (1) the class itself (say ZipCpdeServerImpl) and
 		// (2) its skeleton.
-		Class<?> initialclass = Class.forName(InitialClassName);
+		Class<?> initialclass;
+		try {
+			initialclass = Class.forName(InitialClassName);
+		} catch (ClassNotFoundException e1) {
+			System.out.println("Initial Class does not exist.");
+			return;
+		}
 		//Class<?> initialskeleton = Class.forName(InitialClassName+"_skel");
 		
 		// you should also create a remote object table here.
@@ -43,14 +50,29 @@ public class RMI440 {
 		RORTable440 tbl = new RORTable440();
 		
 		// after that, you create one remote object of initialclass.
-		Object o = initialclass.newInstance();
+		Object o;
+		try {
+			o = initialclass.newInstance();
+		} catch (InstantiationException e1) {
+			System.out.println("Initial Class could not be created.");
+			return;
+		} catch (IllegalAccessException e1) {
+			System.out.println("Initial Class could not be accessed.");
+			return;
+		}
 		
 		// then register it into the table.
 		RemoteObjectReference initROR = tbl.addObj(host, port, o);
 		//reg.rebind(serviceName, initROR);
 	
 		// create a socket.
-		ServerSocket serverSoc = new ServerSocket(port);
+		ServerSocket serverSoc;
+		try {
+			serverSoc = new ServerSocket(port);
+		} catch (IOException e1) {
+			System.out.println("Server Socket could not be created.");
+			return;
+		}
 	
 		// Now we go into a loop.
 		// Look at rmiregistry.java for a simple server programming.
@@ -74,11 +96,24 @@ public class RMI440 {
 			//     the source of the invoker.
 			// (7) closes the socket.
 			
-			Socket soc = serverSoc.accept();
-			ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
-			ObjectInputStream ois = new ObjectInputStream(soc.getInputStream());
+			Socket soc;
+			ObjectOutputStream oos;
+			ObjectInputStream ois;
+			RMIMessage message;
+			try {
+				soc = serverSoc.accept();
+				oos = new ObjectOutputStream(soc.getOutputStream());
+				ois = new ObjectInputStream(soc.getInputStream());
+				message = (RMIMessage) ois.readObject();
+			} catch (IOException e1) {
+				System.out.println("Socket connection error");
+				return;
+			} catch (ClassNotFoundException e) {
+				System.out.println("Class of accepted object could not be found.");
+				return;
+			}
 			
-			RMIMessage message = (RMIMessage) ois.readObject();
+			
 			int key = message.getObjectKey();
 			Object obj = tbl.findObj(key);
 			
@@ -97,11 +132,21 @@ public class RMI440 {
 				message.addException(e);
 			}
 			
-			oos.writeObject(message);
+			try {
+				oos.writeObject(message);
+			} catch (IOException e) {
+				System.out.println("Return message could not be written.");
+				return;
+			}
 			
-			ois.close();
-			oos.close();
-			soc.close();
+			try {
+				ois.close();
+				oos.close();
+				soc.close();
+			} catch (IOException e) {
+				System.out.println("Error closing connection.");
+				return;
+			}
 		}
     }
 }
