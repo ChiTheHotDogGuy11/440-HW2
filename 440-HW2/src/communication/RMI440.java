@@ -10,6 +10,7 @@ import java.net.Socket;
 
 import references.RORTable440;
 import references.RemoteObjectReference;
+import registry.Registry440;
 import stub.RemoteStub440;
 
 public class RMI440 {
@@ -30,7 +31,7 @@ public class RMI440 {
 		port = 1234;
 		
 		//create the registry
-		//SimpleRegistry reg = new SimpleRegistry(registryHost, registryPort);
+		//Registry440 reg = new SimpleRegistry(registryHost, registryPort);
 	
 		// it now have two classes from MainClassName: 
 		// (1) the class itself (say ZipCpdeServerImpl) and
