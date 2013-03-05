@@ -16,14 +16,14 @@ public class LocateSimpleRegistry {
 		    Socket soc = new Socket(host, port);
 		    
 		    // get TCP streams and wrap them. 
-		    BufferedReader in = new BufferedReader(new InputStreamReader (soc.getInputStream()));
-		    PrintWriter out = new PrintWriter(soc.getOutputStream(), true);
+		    ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
+		    ObjectOutputStream out = new ObjectOutputStream(soc.getOutputStream());
 		    
 		    // ask.
-		    out.println("who are you?");
+		    out.writeObject("who are you?");
 		    
 		    // gets answer.
-		    if ((in.readLine()).equals("I am a simple registry.")) {
+		    if (((String)(in.readObject())).equals("I am a registry.")) {
 			    return new RegistryCom440(host, port);
 			} else {
 			    System.out.println("somebody is there but not a registry!");
