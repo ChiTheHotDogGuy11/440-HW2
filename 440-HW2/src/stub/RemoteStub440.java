@@ -15,6 +15,10 @@ public class RemoteStub440 implements Serializable, Remote440 {
 		this.ROR = ROR;
 	}
 	
+	public RemoteObjectReference getROR() {
+		return ROR;
+	}
+	
 	public void setROR(RemoteObjectReference ROR) {
 		this.ROR = ROR;
 	}

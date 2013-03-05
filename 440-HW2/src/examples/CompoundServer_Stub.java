@@ -13,35 +13,25 @@ import stub.Remote440;
 import stub.RemoteException440;
 import stub.RemoteStub440;
 
-public final class HelloServer_Stub extends RemoteStub440
-	implements HelloServer, Remote440 {
+public final class CompoundServer_Stub extends RemoteStub440
+	implements CompoundServer, Remote440 {
 
-	public HelloServer_Stub() {
+	public CompoundServer_Stub() {
 	}
 	
-	public HelloServer_Stub(RemoteObjectReference ROR) {
+	public CompoundServer_Stub(RemoteObjectReference ROR) {
 		super(ROR);
 	}
 	
-	public String sayHello(String nameOfPerson, GoodbyeServer g) throws RemoteException440 {
+	public GoodbyeServer compoundGoodbye() throws RemoteException440 {
 		Socket sock;
 		ObjectOutputStream out;
 		ObjectInputStream in;
 		RMIMessage methodRequest = null;
-		Object[] params = new Object[2];
-		params[0] = nameOfPerson;
-		params[1] = g;
-		
-		for (int i = 0; i < params.length; i++) {
-			if (params[i] instanceof Remote440) {
-				if (params[i] instanceof RemoteStub440) {
-				  params[i] = ((RemoteStub440) g).getROR();
-				}
-			}
-		}	
+		Object[] params = new Object[0];
 		
 		try {
-			methodRequest = new RMIMessage("sayHello", params, super.getObjectKey());
+			methodRequest = new RMIMessage("compoundGoodbye", params, super.getObjectKey());
 			sock = new Socket(super.getIP(), super.getPortName());
 			out = new ObjectOutputStream(sock.getOutputStream());
 			in = new ObjectInputStream(sock.getInputStream());	
@@ -53,7 +43,8 @@ public final class HelloServer_Stub extends RemoteStub440
 			sock.close();
 			
 			resultMessage.printStackTraces();
-			return (String)resultMessage.getReturnValue();
+			GoodbyeServer_Stub gbs = (GoodbyeServer_Stub)((RemoteObjectReference)resultMessage.getReturnValue()).localize();
+			return gbs;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -62,8 +53,7 @@ public final class HelloServer_Stub extends RemoteStub440
 			System.out.println("Result didn't have the right type.");
 			e.printStackTrace();
 		}
-
-		return "SHOULD NEVER GET HERE";
+		return null;
 	}
 	
 }
