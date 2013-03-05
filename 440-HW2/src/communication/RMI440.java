@@ -11,6 +11,7 @@ import java.net.Socket;
 import references.RORTable440;
 import references.RemoteObjectReference;
 import registry.SimpleRegistry;
+import stub.RemoteStub440;
 
 public class RMI440 {
     static String host;
@@ -120,9 +121,14 @@ public class RMI440 {
 			Object[] parameters = message.getParemeters();
 			Class[] paramClasses = new Class[parameters.length];
 			for (int i = 0; i < parameters.length; i++) {
+				if (parameters[i] instanceof RemoteObjectReference) {
+					RemoteObjectReference paramROR = (RemoteObjectReference)parameters[i];
+					RemoteStub440 newParam = paramROR.localize();
+					parameters[i] = newParam;
+				}
 				paramClasses[i] = parameters[i].getClass();
 			}
-			
+
 			try {
 				Method method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
 				Object result = method.invoke(obj, message.getParemeters());
