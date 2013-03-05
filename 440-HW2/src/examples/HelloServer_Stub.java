@@ -32,6 +32,12 @@ public final class HelloServer_Stub extends RemoteStub440
 		params[0] = nameOfPerson;
 		params[1] = g;
 		
+		for (int i = 0; i < params.length; i++) {
+			if (params[i] instanceof Remote440) {
+				params[i] = ((RemoteStub440) g).getROR();
+			}
+		}	
+		
 		try {
 			methodRequest = new RMIMessage("sayHello", params, super.getObjectKey());
 			sock = new Socket(super.getIP(), super.getPortName());
