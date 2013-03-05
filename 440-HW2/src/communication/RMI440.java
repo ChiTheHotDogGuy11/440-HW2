@@ -12,6 +12,7 @@ import references.RORTable440;
 import references.RemoteObjectReference;
 import registry.LocateSimpleRegistry;
 import registry.Registry440;
+import stub.Remote440;
 import stub.RemoteStub440;
 
 public class RMI440 {
@@ -142,7 +143,15 @@ public class RMI440 {
 			try {
 				Method method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
 				Object result = method.invoke(obj, parameters);
-				message.setReturnValue(result);
+				if (result instanceof Remote440) {
+				  if (result instanceof RemoteStub440) {
+					  message.setReturnValue(((RemoteStub440) result).getROR());
+				  } else {
+					  message.setReturnValue(tbl.addObj(host, port, result)); 
+				  }
+				} else {
+				  message.setReturnValue(result);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				message.addException(e);

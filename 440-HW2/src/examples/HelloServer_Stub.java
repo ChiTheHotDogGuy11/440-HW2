@@ -34,7 +34,9 @@ public final class HelloServer_Stub extends RemoteStub440
 		
 		for (int i = 0; i < params.length; i++) {
 			if (params[i] instanceof Remote440) {
-				params[i] = ((RemoteStub440) g).getROR();
+				if (params[i] instanceof RemoteStub440) {
+				  params[i] = ((RemoteStub440) g).getROR();
+				}
 			}
 		}	
 		
