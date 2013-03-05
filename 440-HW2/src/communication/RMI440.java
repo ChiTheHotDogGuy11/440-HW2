@@ -10,6 +10,7 @@ import java.net.Socket;
 
 import references.RORTable440;
 import references.RemoteObjectReference;
+import registry.LocateSimpleRegistry;
 import registry.Registry440;
 import stub.RemoteStub440;
 
@@ -25,13 +26,17 @@ public class RMI440 {
 		/*String registryHost = args[1];
 		int registryPort = Integer.parseInt(args[2]);	
 		String serviceName = args[3];*/
+		
+		String registryHost = "128.237.198.183";
+		int registryPort = 1233;
+		String serviceName = "sillyBilly";
 	
 		// it should have its own port. assume you hardwire it.
 		host = "128.237.114.224";
 		port = 1234;
 		
 		//create the registry
-		//Registry440 reg = new SimpleRegistry(registryHost, registryPort);
+		Registry440 reg = LocateSimpleRegistry.getRegistry(registryHost, registryPort);
 	
 		// it now have two classes from MainClassName: 
 		// (1) the class itself (say ZipCpdeServerImpl) and
@@ -43,7 +48,6 @@ public class RMI440 {
 			System.out.println("Initial Class does not exist.");
 			return;
 		}
-		//Class<?> initialskeleton = Class.forName(InitialClassName+"_skel");
 		
 		// you should also create a remote object table here.
 		// it is a table of a ROR and a skeleton.
@@ -64,7 +68,7 @@ public class RMI440 {
 		
 		// then register it into the table.
 		RemoteObjectReference initROR = tbl.addObj(host, port, o);
-		//reg.rebind(serviceName, initROR);
+		reg.rebind(serviceName, initROR);
 	
 		// create a socket.
 		ServerSocket serverSoc;
