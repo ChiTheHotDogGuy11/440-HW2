@@ -25,6 +25,7 @@ public class RegistryImpl implements Registry440 {
 
 	@Override
 	public void rebind(String serviceName, RemoteObjectReference ror) {
+		if (serviceName == null || ror == null) return;
 		hm.put(serviceName, ror);
 	}
 	
