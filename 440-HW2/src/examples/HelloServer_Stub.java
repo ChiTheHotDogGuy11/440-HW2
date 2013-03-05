@@ -33,15 +33,17 @@ public final class HelloServer_Stub extends RemoteStub440
 		
 		try {
 			methodRequest = new RMIMessage("sayHello", params, super.getObjectKey());
-			System.out.println("IP: " + super.getIP() + ", port: " + super.getPortName());
 			sock = new Socket(super.getIP(), super.getPortName());
 			out = new ObjectOutputStream(sock.getOutputStream());
 			in = new ObjectInputStream(sock.getInputStream());	
 			out.writeObject(methodRequest);
 			RMIMessage resultMessage = (RMIMessage)(in.readObject());
+			
 			out.close();
 			in.close();
 			sock.close();
+			
+			resultMessage.printStackTraces();
 			return (String)resultMessage.getReturnValue();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

@@ -26,7 +26,7 @@ public class LocateSimpleRegistry {
 		    if ((in.readLine()).equals("I am a simple registry.")) {
 			    return new SimpleRegistry(host, port);
 			} else {
-			    System.out.println("somebody is there but not a  registry!");
+			    System.out.println("somebody is there but not a registry!");
 			    return null;
 			}
 		}

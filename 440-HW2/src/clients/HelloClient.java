@@ -1,6 +1,5 @@
 package clients;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import examples.HelloServer;
@@ -25,7 +24,7 @@ public class HelloClient {
 
 		// locate the registry and get ror.
 		//SimpleRegistry sr = LocateSimpleRegistry.getRegistry(host, port);
-		RemoteObjectReference ror = new RemoteObjectReference("128.237.198.29", 1234, 0, "HelloServer");
+		RemoteObjectReference ror = new RemoteObjectReference("128.237.114.224", 1234, 0, "HelloServer");
 		/*try {
 			ror = sr.lookup(serviceName);
 		} catch (IOException e) {
@@ -33,6 +32,6 @@ public class HelloClient {
 		}*/
 		
 		HelloServer hi = (HelloServer) ror.localize();
-		System.out.println(hi.sayHello("Billy Bob"));
+		System.out.println(hi.sayHello(""));
 	}
 }
