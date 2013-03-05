@@ -5,41 +5,57 @@ import java.io.*;
 
 import references.RemoteObjectReference;
 
-public class SimpleRegistry 
+public class RegistryCom440 implements Registry440 
 { 
     // registry holds its port and host, and connects to it each time. 
     String Host;
     int Port;
     
     // ultra simple constructor.
-    public SimpleRegistry(String IPAdr, int PortNum) {
+    public RegistryCom440(String IPAdr, int PortNum) {
 		Host = IPAdr;
 		Port = PortNum;
     }
 
     // returns the ROR (if found) or null (if else)
-    public RemoteObjectReference lookup(String serviceName) throws IOException {
+    public RemoteObjectReference lookup(String serviceName) {
 		// open socket.
 		// it assumes registry is already located by locate registry.
 		// you should usually do try-catch here (and later).
-		Socket soc = new Socket(Host, Port);
-	
-		System.out.println("socket made.");
+		Socket soc;
+		try {
+			soc = new Socket(Host, Port);
+		} catch (UnknownHostException e) {
+			System.out.println("Host not recognized. Could not connect.");
+			return null;
+		} catch (IOException e) {
+			System.out.println("Could not connect.");
+			return null;
+		}
 		    
 		// get TCP streams and wrap them. 
-		BufferedReader in = new BufferedReader(new InputStreamReader (soc.getInputStream()));
-		PrintWriter out = new PrintWriter(soc.getOutputStream(), true);
-	
-		System.out.println("stream made.");
+		BufferedReader in;
+		PrintWriter out;
+		try {
+			in = new BufferedReader(new InputStreamReader (soc.getInputStream()));
+			out = new PrintWriter(soc.getOutputStream(), true);
+		} catch (IOException e) {
+			System.out.println("Communications could not be established with registry.");
+			return null;
+		}
 	
 		// it is locate request, with a service name.
 		out.println("lookup");
 		out.println(serviceName);
 	
-		System.out.println("command and service name sent.");
-	
 		// branch according to the answer.
-		String res = in.readLine();
+		String res;
+		try {
+			res = in.readLine();
+		} catch (IOException e) {
+			System.out.println("Error communicating with registry.");
+			return null;
+		}
 		RemoteObjectReference ror;
 	
 		if (res.equals("found")) {
@@ -80,7 +96,7 @@ public class SimpleRegistry
 
     // rebind a ROR. ROR can be null. again no check, on this or whatever. 
     // I hate this but have no time.
-    public void rebind(String serviceName,RemoteObjectReference ror) throws IOException {
+    public void rebind(String serviceName, RemoteObjectReference ror) throws IOException {
 		// open socket. same as before.
 		Socket soc = new Socket(Host, Port);
 		    

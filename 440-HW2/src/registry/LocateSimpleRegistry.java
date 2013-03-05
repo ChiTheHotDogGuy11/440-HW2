@@ -10,7 +10,7 @@ public class LocateSimpleRegistry {
     // actually the registry is just a pair of host IP and port. 
     // inefficient? well you can change it as you like. 
     // for the rest, you can see SimpleRegistry.java.
-    public static SimpleRegistry getRegistry(String host, int port) {
+    public static RegistryCom440 getRegistry(String host, int port) {
 		// open socket.
 		try {
 		    Socket soc = new Socket(host, port);
@@ -24,7 +24,7 @@ public class LocateSimpleRegistry {
 		    
 		    // gets answer.
 		    if ((in.readLine()).equals("I am a simple registry.")) {
-			    return new SimpleRegistry(host, port);
+			    return new RegistryCom440(host, port);
 			} else {
 			    System.out.println("somebody is there but not a registry!");
 			    return null;
