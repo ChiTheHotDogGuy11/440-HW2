@@ -2,6 +2,7 @@ package clients;
 
 import java.net.UnknownHostException;
 
+import examples.GoodbyeServer;
 import examples.HelloServer;
 import references.RemoteObjectReference;
 import registry.LocateSimpleRegistry;
@@ -29,19 +30,16 @@ public class HelloClient {
 
 		// locate the registry and get ror.
 		Registry440 sr = LocateSimpleRegistry.getRegistry(host, port);
-		RemoteObjectReference ror = sr.lookup("sillyBilly");
-		//RemoteObjectReference ror = new RemoteObjectReference("128.237.114.224", 1234, 0, "HelloServer");
-		/*try {
-			ror = sr.lookup(serviceName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
-		if (ror == null) {
+		RemoteObjectReference rorHello = sr.lookup("sillyBilly");
+		RemoteObjectReference rorGoodbye = sr.lookup("Jackson");
+		
+		if (rorHello == null || rorGoodbye == null) {
 			System.out.println("FUCK!");
 			return;
 		}
 		
-		HelloServer hi = (HelloServer) ror.localize();
-		System.out.println(hi.sayHello("Tyler"));
+		HelloServer hi = (HelloServer) rorHello.localize();
+		GoodbyeServer g = (GoodbyeServer) rorGoodbye.localize();
+		System.out.println(hi.sayHello("Tyler", g));
 	}
 }

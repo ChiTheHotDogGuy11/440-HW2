@@ -23,13 +23,14 @@ public final class HelloServer_Stub extends RemoteStub440
 		super(ROR);
 	}
 	
-	public String sayHello(String nameOfPerson) throws RemoteException440 {
+	public String sayHello(String nameOfPerson, GoodbyeServer g) throws RemoteException440 {
 		Socket sock;
 		ObjectOutputStream out;
 		ObjectInputStream in;
 		RMIMessage methodRequest = null;
-		Object[] params = new Object[1];
+		Object[] params = new Object[2];
 		params[0] = nameOfPerson;
+		params[1] = g;
 		
 		try {
 			methodRequest = new RMIMessage("sayHello", params, super.getObjectKey());

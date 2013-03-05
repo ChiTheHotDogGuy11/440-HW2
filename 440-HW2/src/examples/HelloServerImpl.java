@@ -9,6 +9,6 @@ public class HelloServerImpl implements HelloServer {
 		if (name.equals("")) {
 			throw new RemoteException440("Empty String");
 		}
-	    return "Hello World! Hello " + name + "." + g.sayGoodbye; 
+	    return "Hello World! Hello " + name + "." + g.sayGoodbye(); 
 	  }
 }
