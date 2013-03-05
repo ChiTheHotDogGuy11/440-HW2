@@ -31,7 +31,7 @@ public final class GoodbyeServer_Stub extends RemoteStub440
 		Object[] params = new Object[0];
 		
 		try {
-			methodRequest = new RMIMessage("sayHello", params, super.getObjectKey());
+			methodRequest = new RMIMessage("sayGoodbye", params, super.getObjectKey());
 			sock = new Socket(super.getIP(), super.getPortName());
 			out = new ObjectOutputStream(sock.getOutputStream());
 			in = new ObjectInputStream(sock.getInputStream());	
