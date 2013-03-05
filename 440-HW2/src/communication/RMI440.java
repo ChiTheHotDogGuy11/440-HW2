@@ -175,11 +175,9 @@ public class RMI440 {
 			} catch (InvocationTargetException e) {
 				message.setException(e.getCause());
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				message.setException(e.getCause());
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				message.setException(e.getCause());
 			}
 			
 			//Write marshalled result (in RMIMessage) to output stream
