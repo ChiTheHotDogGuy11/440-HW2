@@ -27,6 +27,7 @@ public class RegistryImpl implements Registry440 {
 	public void rebind(String serviceName, RemoteObjectReference ror) {
 		if (serviceName == null || ror == null) return;
 		hm.put(serviceName, ror);
+		System.out.println("Finishing rebind.");
 	}
 	
 	public static void main(String[] args) {
@@ -50,14 +51,19 @@ public class RegistryImpl implements Registry440 {
 				ois = new ObjectInputStream(soc.getInputStream());
 				commandToRun = (String)ois.readObject();
 				if (commandToRun.equals("lookup")) {
+					System.out.println("lookup called!");
 					String lookupTerm = (String)ois.readObject();
 					RemoteObjectReference result = registry.lookup(lookupTerm);
 					oos.writeObject(result);
 				}
 				else if (commandToRun.equals("rebind")) {
+					System.out.println("rebind called!");
 					String newName = (String)ois.readObject();
 					RemoteObjectReference objToRename = (RemoteObjectReference)ois.readObject();
 					registry.rebind(newName, objToRename);
+				}
+				else if (commandToRun.equals("who are you?")) {
+					oos.writeObject("I am a registry.");
 				}
 			} catch (IOException e1) {
 				System.out.println("Socket connection error");
