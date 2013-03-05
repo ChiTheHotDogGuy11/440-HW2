@@ -53,34 +53,16 @@ public class RegistryCom440 implements Registry440
 			System.out.println("Error communicating with registry.");
 			return null;
 		}
-	
-		// branch according to the answer.
-		String res;
+		
+		RemoteObjectReference ror;
 		try {
-			res = (String) in.readObject();
+			ror = (RemoteObjectReference) in.readObject();
 		} catch (IOException e) {
 			System.out.println("Error communicating with registry.");
 			return null;
 		} catch (ClassNotFoundException e) {
 			System.out.println("Error communicating with registry.");
 			return null;
-		}
-		
-		RemoteObjectReference ror;
-		if (res.equals("found")) {
-
-			try {
-				ror = (RemoteObjectReference) in.readObject();
-			} catch (IOException e) {
-				System.out.println("Error communicating with registry.");
-				return null;
-			} catch (ClassNotFoundException e) {
-				System.out.println("Error communicating with registry.");
-				return null;
-			}
-		} else {
-			System.out.println("it is not found!.");
-			ror = null;
 		}
 	
 		// close the socket.

@@ -36,8 +36,12 @@ public class HelloClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}*/
+		if (ror == null) {
+			System.out.println("FUCK!");
+			return;
+		}
 		
 		HelloServer hi = (HelloServer) ror.localize();
-		System.out.println(hi.sayHello(""));
+		System.out.println(hi.sayHello("Tyler"));
 	}
 }
