@@ -25,7 +25,7 @@ public class HelloClient {
 		int port = Integer.parseInt(args[1]);
 		String serviceName = args[2];*/
 		
-		String host = "128.237.198.183";
+		String host = "128.237.185.147";
 		int port = 1233;
 
 		// locate the registry and get ror.
@@ -40,6 +40,6 @@ public class HelloClient {
 		
 		HelloServer hi = (HelloServer) rorHello.localize();
 		GoodbyeServer g = (GoodbyeServer) rorGoodbye.localize();
-		System.out.println(hi.sayHello("Tyler", g));
+		System.out.println(hi.sayHello("", g));
 	}
 }

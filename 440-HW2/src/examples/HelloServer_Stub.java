@@ -5,15 +5,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 import communication.RMIMessage;
-
 import references.RemoteObjectReference;
 import stub.Remote440;
-import stub.RemoteException440;
 import stub.RemoteStub440;
 
+@SuppressWarnings("serial")
 public final class HelloServer_Stub extends RemoteStub440
 	implements HelloServer, Remote440 {
 
