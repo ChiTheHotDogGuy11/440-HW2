@@ -3,7 +3,7 @@ package clients;
 import java.net.UnknownHostException;
 
 import references.RemoteObjectReference;
-import registry.LocateSimpleRegistry;
+import registry.LocateRegistry;
 import registry.Registry440;
 import stub.RemoteException440;
 import examples.CompoundServer;
@@ -28,7 +28,7 @@ public class CompundClient {
 		int port = 1233;
 
 		// locate the registry and get ror.
-		Registry440 sr = LocateSimpleRegistry.getRegistry(host, port);
+		Registry440 sr = LocateRegistry.getRegistry(host, port);
 		RemoteObjectReference rorCompound = sr.lookup("Jimmy");
 		
 		if (rorCompound == null) {

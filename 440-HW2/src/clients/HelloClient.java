@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 import examples.GoodbyeServer;
 import examples.HelloServer;
 import references.RemoteObjectReference;
-import registry.LocateSimpleRegistry;
+import registry.LocateRegistry;
 import registry.Registry440;
 import stub.RemoteException440;
 
@@ -29,7 +29,7 @@ public class HelloClient {
 		int port = 1233;
 
 		// locate the registry and get ror.
-		Registry440 sr = LocateSimpleRegistry.getRegistry(host, port);
+		Registry440 sr = LocateRegistry.getRegistry(host, port);
 		RemoteObjectReference rorHello = sr.lookup("sillyBilly");
 		RemoteObjectReference rorGoodbye = sr.lookup("Jackson");
 		

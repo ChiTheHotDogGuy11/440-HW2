@@ -5,26 +5,44 @@ import java.io.*;
 
 import references.RemoteObjectReference;
 
+/** RegistryCom440
+ * 
+ * Implements the Registry440
+ * Used (by client) to communicate with an implementation of the registry
+ * 
+ * @author Tyler Healy - thealy, Justin Greet - jgreet
+ */
 public class RegistryCom440 implements Registry440 
 { 
-    // registry holds its port and host, and connects to it each time. 
-    String Host;
-    int Port;
+    //Host and port where registry is located 
+    String host;
+    int port;
     
-    // ultra simple constructor.
-    public RegistryCom440(String IPAdr, int PortNum) {
-		Host = IPAdr;
-		Port = PortNum;
+    /** RegistryCom440(String IPAdr, int PortNum)
+     * 
+     * Constructor
+     * @param host - host where registry is located
+     * @param port - port where registry is located
+     */
+    public RegistryCom440(String host, int port) {
+		this.host = host;
+		this.port = port;
     }
 
-    // returns the ROR (if found) or null (if else)
+    /** lookup(String serviceName)
+     * 
+     * Lookup by serviceName is performed at the registry. Returns the
+     * RemoteObjectReference returned by the registry
+     * 
+     * @return RemoteObjectReference returned by registry
+     */
     public RemoteObjectReference lookup(String serviceName) {
-		// open socket.
-		// it assumes registry is already located by locate registry.
-		// you should usually do try-catch here (and later).
+		
+    	//Opens socket at host/port.
+    	//Assumes LocateRegistry has detected that a registry is there
 		Socket soc;
 		try {
-			soc = new Socket(Host, Port);
+			soc = new Socket(host, port);
 		} catch (UnknownHostException e) {
 			System.out.println("Host not recognized. Could not connect.");
 			return null;
@@ -33,7 +51,7 @@ public class RegistryCom440 implements Registry440
 			return null;
 		}
 		    
-		// get TCP streams and wrap them. 
+		//Gets object input/output streams
 		ObjectInputStream in;
 		ObjectOutputStream out;
 		try {
@@ -44,7 +62,7 @@ public class RegistryCom440 implements Registry440
 			return null;
 		}
 	
-		// it is locate request, with a service name.
+		//Makes a lookup request to the registry
 		try {
 			out.writeObject("lookup");
 			out.flush();
@@ -54,6 +72,7 @@ public class RegistryCom440 implements Registry440
 			return null;
 		}
 		
+		//Reads the result returned by the registry
 		RemoteObjectReference ror;
 		try {
 			ror = (RemoteObjectReference) in.readObject();
@@ -65,24 +84,28 @@ public class RegistryCom440 implements Registry440
 			return null;
 		}
 	
-		// close the socket.
+		//Closes the socket
 		try {
 			soc.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 			
-		// return ROR.
+		//Returns the RemoteObjectReference given by the registry
 		return ror;
     }
 
-    // rebind a ROR. ROR can be null. again no check, on this or whatever. 
-    // I hate this but have no time.
+    /** rebind(String serviceName, RemoteObjectReference ror)
+     * 
+     * Stores an object in the registry under a given serviceName
+     */
     public void rebind(String serviceName, RemoteObjectReference ror) {
-		// open socket. same as before.
+		
+    	//Opens socket a host/port
+    	//Assumes that LocateRegistry has determined a registry to exist there
 		Socket soc;
 		try {
-			soc = new Socket(Host, Port);
+			soc = new Socket(host, port);
 		} catch (UnknownHostException e) {
 			System.out.println("Host not recognized. Could not connect.");
 			return;
@@ -91,17 +114,16 @@ public class RegistryCom440 implements Registry440
 			return;
 		}
 		    
-		// get TCP streams and wrap them.
+		//Creates object output stream
 		ObjectOutputStream out;
 		try {
-			//in = new BufferedReader(new InputStreamReader (soc.getInputStream()));
 			out = new ObjectOutputStream(soc.getOutputStream());
 		} catch (IOException e) {
 			System.out.println("Communications could not be established with registry.");
 			return;
 		}
 	
-		// it is a rebind request, with a service name and ROR.
+		//Writes the rebind request with serviceName and RemoteObjectReference
 		try {
 			out.writeObject("rebind");
 			out.flush();
@@ -113,15 +135,8 @@ public class RegistryCom440 implements Registry440
 			System.out.println("Error communicating with registry.");
 			return;
 		}
-		
-		/* it also gets an ack, but this is not used.
-		try {
-			String ack = in.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
 	
-		// close the socket.
+		//Closes the socket
 		try {
 			soc.close();
 		} catch (IOException e) {

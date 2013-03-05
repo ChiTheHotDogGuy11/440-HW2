@@ -11,7 +11,7 @@ import java.net.Socket;
 
 import references.RORTable440;
 import references.RemoteObjectReference;
-import registry.LocateSimpleRegistry;
+import registry.LocateRegistry;
 import registry.Registry440;
 import stub.Remote440;
 import stub.RemoteStub440;
@@ -54,7 +54,7 @@ public class RMI440 {
 		port = 1234;	//hardwired value
 		
 		//Locate the global registry
-		Registry440 reg = LocateSimpleRegistry.getRegistry(registryHost, registryPort);
+		Registry440 reg = LocateRegistry.getRegistry(registryHost, registryPort);
 	
 		//Attempts to find the Class tied to InitialClassName
 		Class<?> initialclass;
