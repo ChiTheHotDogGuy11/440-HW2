@@ -62,33 +62,33 @@ public class RegistryCom440 implements Registry440
 			System.out.println("it is found!.");
 	
 			// receive ROR data, witout check.
-			String ro_IPAdr = in.readLine();
+			String ro_IPAdr;
+			int ro_PortNum;
+			int ro_ObjKey;
+			String ro_InterfaceName;
+			try {
+				ro_IPAdr = in.readLine();
+				ro_PortNum = Integer.parseInt(in.readLine());
+				ro_ObjKey = Integer.parseInt(in.readLine());
+				ro_InterfaceName = in.readLine();
+			} catch (IOException e) {
+				System.out.println("Error communicating with registry.");
+				return null;
+			}
 	
-			System.out.println(ro_IPAdr);
-	
-			int ro_PortNum = Integer.parseInt(in.readLine());
-	
-			System.out.println(ro_PortNum);
-	
-			int ro_ObjKey = Integer.parseInt(in.readLine());
-	
-			System.out.println(ro_ObjKey);
-	
-			String ro_InterfaceName = in.readLine();
-	
-			System.out.println(ro_InterfaceName);
-	
-			
 			// make ROR.
 			ror = new RemoteObjectReference(ro_IPAdr, ro_PortNum, ro_ObjKey, ro_InterfaceName);
 		} else {
 			System.out.println("it is not found!.");
-	
 			ror = null;
 		}
 	
 		// close the socket.
-		soc.close();
+		try {
+			soc.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 			
 		// return ROR.
 		return ror;
@@ -96,13 +96,29 @@ public class RegistryCom440 implements Registry440
 
     // rebind a ROR. ROR can be null. again no check, on this or whatever. 
     // I hate this but have no time.
-    public void rebind(String serviceName, RemoteObjectReference ror) throws IOException {
+    public void rebind(String serviceName, RemoteObjectReference ror) {
 		// open socket. same as before.
-		Socket soc = new Socket(Host, Port);
+		Socket soc;
+		try {
+			soc = new Socket(Host, Port);
+		} catch (UnknownHostException e) {
+			System.out.println("Host not recognized. Could not connect.");
+			return;
+		} catch (IOException e) {
+			System.out.println("Could not connect.");
+			return;
+		}
 		    
 		// get TCP streams and wrap them. 
-		BufferedReader in = new BufferedReader(new InputStreamReader (soc.getInputStream()));
-		PrintWriter out = new PrintWriter(soc.getOutputStream(), true);
+		//BufferedReader in;
+		PrintWriter out;
+		try {
+			//in = new BufferedReader(new InputStreamReader (soc.getInputStream()));
+			out = new PrintWriter(soc.getOutputStream(), true);
+		} catch (IOException e) {
+			System.out.println("Communications could not be established with registry.");
+			return;
+		}
 	
 		// it is a rebind request, with a service name and ROR.
 		out.println("rebind");
@@ -112,10 +128,18 @@ public class RegistryCom440 implements Registry440
 		out.println(ror.getObjectKey());
 		out.println(ror.getRIName());
 	
-		// it also gets an ack, but this is not used.
-		String ack = in.readLine();
+		/* it also gets an ack, but this is not used.
+		try {
+			String ack = in.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
 	
 		// close the socket.
-		soc.close();
+		try {
+			soc.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 }
