@@ -34,50 +34,50 @@ public class RegistryCom440 implements Registry440
 		}
 		    
 		// get TCP streams and wrap them. 
-		BufferedReader in;
-		PrintWriter out;
+		ObjectInputStream in;
+		ObjectOutputStream out;
 		try {
-			in = new BufferedReader(new InputStreamReader (soc.getInputStream()));
-			out = new PrintWriter(soc.getOutputStream(), true);
+			in = new ObjectInputStream(soc.getInputStream());
+			out = new ObjectOutputStream(soc.getOutputStream());
 		} catch (IOException e) {
 			System.out.println("Communications could not be established with registry.");
 			return null;
 		}
 	
 		// it is locate request, with a service name.
-		out.println("lookup");
-		out.println(serviceName);
+		try {
+			out.writeObject("lookup");
+			out.flush();
+			out.writeObject(serviceName);
+		} catch (IOException e1) {
+			System.out.println("Error communicating with registry.");
+			return null;
+		}
 	
 		// branch according to the answer.
 		String res;
 		try {
-			res = in.readLine();
+			res = (String) in.readObject();
 		} catch (IOException e) {
 			System.out.println("Error communicating with registry.");
 			return null;
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error communicating with registry.");
+			return null;
 		}
+		
 		RemoteObjectReference ror;
-	
 		if (res.equals("found")) {
-			System.out.println("it is found!.");
-	
-			// receive ROR data, witout check.
-			String ro_IPAdr;
-			int ro_PortNum;
-			int ro_ObjKey;
-			String ro_InterfaceName;
+
 			try {
-				ro_IPAdr = in.readLine();
-				ro_PortNum = Integer.parseInt(in.readLine());
-				ro_ObjKey = Integer.parseInt(in.readLine());
-				ro_InterfaceName = in.readLine();
+				ror = (RemoteObjectReference) in.readObject();
 			} catch (IOException e) {
 				System.out.println("Error communicating with registry.");
 				return null;
+			} catch (ClassNotFoundException e) {
+				System.out.println("Error communicating with registry.");
+				return null;
 			}
-	
-			// make ROR.
-			ror = new RemoteObjectReference(ro_IPAdr, ro_PortNum, ro_ObjKey, ro_InterfaceName);
 		} else {
 			System.out.println("it is not found!.");
 			ror = null;
@@ -109,25 +109,28 @@ public class RegistryCom440 implements Registry440
 			return;
 		}
 		    
-		// get TCP streams and wrap them. 
-		//BufferedReader in;
-		PrintWriter out;
+		// get TCP streams and wrap them.
+		ObjectOutputStream out;
 		try {
 			//in = new BufferedReader(new InputStreamReader (soc.getInputStream()));
-			out = new PrintWriter(soc.getOutputStream(), true);
+			out = new ObjectOutputStream(soc.getOutputStream());
 		} catch (IOException e) {
 			System.out.println("Communications could not be established with registry.");
 			return;
 		}
 	
 		// it is a rebind request, with a service name and ROR.
-		out.println("rebind");
-		out.println(serviceName);
-		out.println(ror.getIP());
-		out.println(ror.getPort()); 
-		out.println(ror.getObjectKey());
-		out.println(ror.getRIName());
-	
+		try {
+			out.writeObject("rebind");
+			out.flush();
+			out.writeObject(serviceName);
+			out.flush();
+			out.writeObject(ror);
+		} catch (IOException e1) {
+			System.out.println("Error communicating with registry.");
+			return;
+		}
+		
 		/* it also gets an ack, but this is not used.
 		try {
 			String ack = in.readLine();
