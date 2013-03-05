@@ -129,8 +129,14 @@ public class RMI440 {
 					RemoteObjectReference paramROR = (RemoteObjectReference)parameters[i];
 					RemoteStub440 newParam = paramROR.localize();
 					parameters[i] = newParam;
+					try {
+						paramClasses[i] = Class.forName(paramROR.getRIName());
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				paramClasses[i] = parameters[i].getClass();
+				else paramClasses[i] = parameters[i].getClass();
 			}
 
 			try {
