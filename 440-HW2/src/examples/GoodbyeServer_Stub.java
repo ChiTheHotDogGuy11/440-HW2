@@ -42,7 +42,11 @@ public final class GoodbyeServer_Stub extends RemoteStub440
 			in.close();
 			sock.close();
 			
-			resultMessage.printStackTraces();
+			Throwable e = resultMessage.getException();
+			if (e != null) {
+				throw e;
+			}
+			
 			return (String)resultMessage.getReturnValue();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -51,6 +55,9 @@ public final class GoodbyeServer_Stub extends RemoteStub440
 		} catch (ClassNotFoundException e) {
 			System.out.println("Result didn't have the right type.");
 			e.printStackTrace();
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return null;
 		}
 
 		return "SHOULD NEVER GET HERE";

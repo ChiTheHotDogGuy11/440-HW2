@@ -3,6 +3,7 @@ package communication;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -23,14 +24,14 @@ public class RMI440 {
     // reference to the remote object.
     // As you can see, the exception handling is not done at all.
     public static void main(String args[]) {
-		String InitialClassName = "examples.HelloServerImpl";
+		String InitialClassName = "examples.Compound";
 		/*String registryHost = args[1];
 		int registryPort = Integer.parseInt(args[2]);	
 		String serviceName = args[3];*/
 		
 		String registryHost = "128.237.198.183";
 		int registryPort = 1233;
-		String serviceName = "sillyBilly";
+		String serviceName = "Jimmy";
 	
 		// it should have its own port. assume you hardwire it.
 		host = "128.237.114.224";
@@ -140,8 +141,18 @@ public class RMI440 {
 				else paramClasses[i] = parameters[i].getClass();
 			}
 
+			Method method = null;
 			try {
-				Method method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
+				method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (NoSuchMethodException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			try {
 				Object result = method.invoke(obj, parameters);
 				if (result instanceof Remote440) {
 				  if (result instanceof RemoteStub440) {
@@ -152,9 +163,14 @@ public class RMI440 {
 				} else {
 				  message.setReturnValue(result);
 				}
-			} catch (Exception e) {
+			} catch (InvocationTargetException e) {
+				message.setException(e.getCause());
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-				message.addException(e);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			try {

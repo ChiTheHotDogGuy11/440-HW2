@@ -42,7 +42,11 @@ public final class CompoundServer_Stub extends RemoteStub440
 			in.close();
 			sock.close();
 			
-			resultMessage.printStackTraces();
+			Throwable e = resultMessage.getException();
+			if (e != null) {
+				throw e;
+			}
+			
 			GoodbyeServer_Stub gbs = (GoodbyeServer_Stub)((RemoteObjectReference)resultMessage.getReturnValue()).localize();
 			return gbs;
 		} catch (UnknownHostException e) {
@@ -52,6 +56,9 @@ public final class CompoundServer_Stub extends RemoteStub440
 		} catch (ClassNotFoundException e) {
 			System.out.println("Result didn't have the right type.");
 			e.printStackTrace();
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return null;
 		}
 		return null;
 	}
