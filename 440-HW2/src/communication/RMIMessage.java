@@ -8,7 +8,7 @@ public class RMIMessage implements Serializable{
 	private Object[] parameters;
 	private int objectKey;
 	private Object returnValue = null;
-	private ArrayList<Exception> exceptions = new ArrayList<Exception>();
+	private Throwable exception;
 	
 	public RMIMessage(String methodName, Object[] parameters, int objectKey) {
 		this.methodName = methodName;
@@ -36,17 +36,11 @@ public class RMIMessage implements Serializable{
 		return returnValue;
 	}
 	
-	public ArrayList<Exception> getExceptions() {
-		return exceptions;
+	public Throwable getException() {
+		return exception;
 	}
 	
-	public void printStackTraces() {
-		for (int i = 0; i < exceptions.size(); i++) {
-			exceptions.get(i).printStackTrace();
-		}
-	}
-	
-	public void addException(Exception e) {
-		exceptions.add(e);
+	public void setException(Throwable e) {
+		exception = e;
 	}
 }

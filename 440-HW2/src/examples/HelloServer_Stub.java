@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import communication.RMIMessage;
 
@@ -23,7 +24,7 @@ public final class HelloServer_Stub extends RemoteStub440
 		super(ROR);
 	}
 	
-	public String sayHello(String nameOfPerson, GoodbyeServer g) throws RemoteException440 {
+	public String sayHello(String nameOfPerson, GoodbyeServer g) {
 		Socket sock;
 		ObjectOutputStream out;
 		ObjectInputStream in;
@@ -52,7 +53,11 @@ public final class HelloServer_Stub extends RemoteStub440
 			in.close();
 			sock.close();
 			
-			resultMessage.printStackTraces();
+			Throwable e = resultMessage.getException();
+			if (e != null) {
+				throw e;
+			}
+			
 			return (String)resultMessage.getReturnValue();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -61,6 +66,9 @@ public final class HelloServer_Stub extends RemoteStub440
 		} catch (ClassNotFoundException e) {
 			System.out.println("Result didn't have the right type.");
 			e.printStackTrace();
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return null;
 		}
 
 		return "SHOULD NEVER GET HERE";
