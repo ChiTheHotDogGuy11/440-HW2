@@ -10,7 +10,6 @@ import java.net.Socket;
 
 import references.RORTable440;
 import references.RemoteObjectReference;
-import registry.SimpleRegistry;
 import stub.RemoteStub440;
 
 public class RMI440 {
