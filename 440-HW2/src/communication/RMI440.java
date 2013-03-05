@@ -141,7 +141,7 @@ public class RMI440 {
 
 			try {
 				Method method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
-				Object result = method.invoke(obj, message.getParemeters());
+				Object result = method.invoke(obj, parameters);
 				message.setReturnValue(result);
 			} catch (Exception e) {
 				e.printStackTrace();
