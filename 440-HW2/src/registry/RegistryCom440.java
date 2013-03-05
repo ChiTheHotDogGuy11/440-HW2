@@ -127,6 +127,7 @@ public class RegistryCom440 implements Registry440
 			out.flush();
 			out.writeObject(ror);
 		} catch (IOException e1) {
+			e1.printStackTrace();
 			System.out.println("Error communicating with registry.");
 			return;
 		}

@@ -1,8 +1,10 @@
 package references;
 
+import java.io.Serializable;
+
 import stub.RemoteStub440;
 
-public class RemoteObjectReference {
+public class RemoteObjectReference implements Serializable {
 	
 	private String IP_address;
 	private int port;
