@@ -39,7 +39,7 @@ public final class Element_Stub extends RemoteStub440
 				throw e;
 			}
 			
-			return (int)resultMessage.getReturnValue();
+			return (Integer) resultMessage.getReturnValue();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

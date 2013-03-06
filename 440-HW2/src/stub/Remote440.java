@@ -7,5 +7,4 @@ package stub;
  * @author Tyler Healy - thealy, Justin Greet - jgreet
  */
 public interface Remote440 {
-	public void main(String[] args);
 }

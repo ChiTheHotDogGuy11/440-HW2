@@ -41,7 +41,7 @@ public final class Container_Stub extends RemoteStub440
 				throw e;
 			}
 			
-			return (int)resultMessage.getReturnValue();
+			return (Double) resultMessage.getReturnValue();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
