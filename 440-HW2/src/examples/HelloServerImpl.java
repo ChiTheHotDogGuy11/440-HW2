@@ -1,5 +1,7 @@
 package examples;
 
+import communication.RMI440;
+
 import stub.RemoteException440;
 
 public class HelloServerImpl implements HelloServer {
