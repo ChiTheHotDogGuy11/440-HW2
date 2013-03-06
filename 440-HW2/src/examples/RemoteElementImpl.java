@@ -2,14 +2,12 @@ package examples;
 
 import communication.RMI440;
 
-import stub.Remote440;
-
 public class RemoteElementImpl implements RemoteElement {
 	private int value;
 	private String identifier;
 
 	public static void main(String[] args) {
-		RMI440 serverInst = new RMI440("128.237.207.225", 1233, "elem1", new RemoteElementImpl(236, "Justin"));
+		RMI440 serverInst = new RMI440("128.237.207.225", 1233, "elem2", new RemoteElementImpl(236, "Justin"));
 		serverInst.run();
 	}
 	

@@ -56,7 +56,7 @@ public class RMI440 {
     public void run() {
 		//TODO automate setting of host
 		host = "128.237.114.224";
-		port = 1236;	//hardwired value
+		port = 1234;	//hardwired value
 		
 		//Locate the global registry
 		Registry440 reg = LocateRegistry.getRegistry(regHost, regPort);
@@ -91,6 +91,7 @@ public class RMI440 {
 		 * 8.) Closes socket
 		 */
 		while (true) {
+			boolean exceptionThrown = false;
 			
 			//Accepts a connection and creates object input/output streams
 			Socket soc;
@@ -104,10 +105,10 @@ public class RMI440 {
 				message = (RMIMessage) ois.readObject();
 			} catch (IOException e) {
 				System.out.println("Socket connection error");
-				return;
+				continue;
 			} catch (ClassNotFoundException e) {
 				System.out.println("Class of accepted object could not be found.");
-				return;
+				continue;
 			}
 			
 			//Gets local object from RORTable
@@ -125,41 +126,57 @@ public class RMI440 {
 					try {
 						paramClasses[i] = Class.forName(paramROR.getRIName());
 					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						System.out.println("Class not found.");
+						continue;
+					}
+				} else {
+					if (parameters[i] == null) {
+					  message.setException(new NullPointerException("Argument cannot be null!"));
+					  exceptionThrown = true;
+					  break;
+					} else {
+						paramClasses[i] = parameters[i].getClass();
 					}
 				}
-				else paramClasses[i] = parameters[i].getClass();
 			}
 
 			//Uses reflection to obtain method to invoke on the local object
 			Method method = null;
-			try {
-				method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
-			} catch (SecurityException e) {
-				message.setException(e);
-			} catch (NoSuchMethodException e) {
-				message.setException(e);
+			if (!exceptionThrown) {
+				try {
+					method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
+				} catch (SecurityException e) {
+					message.setException(e);
+					exceptionThrown = true;
+				} catch (NoSuchMethodException e) {
+					message.setException(e);
+					exceptionThrown = true;
+				}
 			}
 			
 			//Invoke method on the local object and marshall result
-			try {
-				Object result = method.invoke(obj, parameters);
-				if (result instanceof Remote440) {
-				  if (result instanceof RemoteStub440) {
-					  message.setReturnValue(((RemoteStub440) result).getROR());
-				  } else {
-					  message.setReturnValue(tbl.addObj(host, port, result)); 
-				  }
-				} else {
-				  message.setReturnValue(result);
+			if (!exceptionThrown) {
+				try {
+					Object result = method.invoke(obj, parameters);
+					if (result instanceof Remote440) {
+					  if (result instanceof RemoteStub440) {
+						  message.setReturnValue(((RemoteStub440) result).getROR());
+					  } else {
+						  message.setReturnValue(tbl.addObj(host, port, result)); 
+					  }
+					} else {
+					  message.setReturnValue(result);
+					}
+				} catch (InvocationTargetException e) {
+					message.setException(e.getCause());
+					exceptionThrown = true;
+				} catch (IllegalArgumentException e) {
+					message.setException(e.getCause());
+					exceptionThrown = true;
+				} catch (IllegalAccessException e) {
+					message.setException(e.getCause());
+					exceptionThrown = true;
 				}
-			} catch (InvocationTargetException e) {
-				message.setException(e.getCause());
-			} catch (IllegalArgumentException e) {
-				message.setException(e.getCause());
-			} catch (IllegalAccessException e) {
-				message.setException(e.getCause());
 			}
 			
 			//Write marshalled result (in RMIMessage) to output stream
