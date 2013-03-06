@@ -33,9 +33,9 @@ public class ContainerClient {
 		Container container = (Container)containerROR.localize();
 		
 		Element[] elems = new Element[]{elem1, elem2, elem3, elem4};
-		/*System.out.println(container.identifyElems(elems));
+		System.out.println(container.identifyElems(elems));
 		System.out.println("Average: " + container.getAverage(elems));
-		System.out.println("Minimum Element:" + container.minElem(elems).identify());*/
+		System.out.println("Minimum Element:" + container.minElem(elems).identify());
 		
 		System.out.println(container.shoutout(200));
 		container.shoutout(-1);
