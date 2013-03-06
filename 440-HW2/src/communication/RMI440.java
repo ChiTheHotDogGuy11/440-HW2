@@ -60,7 +60,7 @@ public class RMI440 {
 		Class<?> initialclass;
 		try {
 			initialclass = Class.forName(InitialClassName);
-		} catch (ClassNotFoundException e1) {
+		} catch (ClassNotFoundException e) {
 			System.out.println("Initial Class does not exist.");
 			return;
 		}
@@ -118,7 +118,7 @@ public class RMI440 {
 				oos = new ObjectOutputStream(soc.getOutputStream());
 				ois = new ObjectInputStream(soc.getInputStream());
 				message = (RMIMessage) ois.readObject();
-			} catch (IOException e1) {
+			} catch (IOException e) {
 				System.out.println("Socket connection error");
 				return;
 			} catch (ClassNotFoundException e) {
@@ -152,12 +152,10 @@ public class RMI440 {
 			Method method = null;
 			try {
 				method = obj.getClass().getMethod(message.getMethodName(), paramClasses);
-			} catch (SecurityException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (NoSuchMethodException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			} catch (SecurityException e) {
+				message.setException(e);
+			} catch (NoSuchMethodException e) {
+				message.setException(e);
 			}
 			
 			//Invoke method on the local object and marshall result

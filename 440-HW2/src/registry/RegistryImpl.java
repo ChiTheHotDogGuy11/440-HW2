@@ -77,6 +77,7 @@ public class RegistryImpl implements Registry440 {
 		 * 6.) If lookup or identify, return result
 		 * 7.) Close the connection
 		 */
+		//TODO Make multithreaded
 		while (true) {
 			
 			//Creates a socket and object input/output streams, accepts command
