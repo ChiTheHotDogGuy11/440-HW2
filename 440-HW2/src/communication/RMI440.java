@@ -38,51 +38,35 @@ public class RMI440 {
 	//Host and port on which the server resides
     static String host;
     static int port;
+    
+    //Host and port on which the registry resides
+    private String regHost;
+    private int regPort;
+    
+    private String serviceName;
+    private Object initialObject;
+    
+    public RMI440(String registryHost, int registryPort, String serviceName, Object initialObject) {
+    	this.regHost = registryHost;
+    	this.regPort = registryPort;
+    	this.serviceName = serviceName;
+    	this.initialObject = initialObject;
+    }
 
-    public static void main(String args[]) {
-		String InitialClassName = "examples.HelloServerImpl";
-		/*String registryHost = args[1];
-		int registryPort = Integer.parseInt(args[2]);	
-		String serviceName = args[3];*/
-		
-		String registryHost = "128.237.185.147";
-		int registryPort = 1233;
-		String serviceName = "sillyBilly";
-	
+    public void run() {
 		//TODO automate setting of host
 		host = "128.237.114.224";
 		port = 1234;	//hardwired value
 		
 		//Locate the global registry
-		Registry440 reg = LocateRegistry.getRegistry(registryHost, registryPort);
-	
-		//Attempts to find the Class tied to InitialClassName
-		Class<?> initialclass;
-		try {
-			initialclass = Class.forName(InitialClassName);
-		} catch (ClassNotFoundException e) {
-			System.out.println("Initial Class does not exist.");
-			return;
-		}
+		Registry440 reg = LocateRegistry.getRegistry(regHost, regPort);
 		
 		//Creates a RORTable to map RemoteObjectReference to local objects
 		RORTable440 tbl = new RORTable440();
 		
-		//Attempts to create a local instantiation of the initialClass
-		Object o;
-		try {
-			o = initialclass.newInstance();
-		} catch (InstantiationException e1) {
-			System.out.println("Initial Class could not be created.");
-			return;
-		} catch (IllegalAccessException e1) {
-			System.out.println("Initial Class could not be accessed.");
-			return;
-		}
-		
 		/* Registers the above local instantiation in the RORTable and adds it
 		 * to the registry */
-		RemoteObjectReference initROR = tbl.addObj(host, port, o);
+		RemoteObjectReference initROR = tbl.addObj(host, port, initialObject);
 		reg.rebind(serviceName, initROR);
 	
 		//Creates a ServerSocket to listen for requests
