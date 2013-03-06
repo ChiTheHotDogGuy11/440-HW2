@@ -46,4 +46,10 @@ public class RemoteContainerImpl implements Container{
 		return result;
 	}
 
+	@Override
+	public String shoutout(int value) {
+		if (value < 0) throw new IllegalArgumentException("Negative values ain't worth my time!");
+		return "This is a shoutout to my element with value " + value;
+	}
+
 }

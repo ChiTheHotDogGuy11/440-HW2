@@ -8,4 +8,6 @@ public interface Container extends Remote440 {
 	public Element minElem(Element[] elems);
 	
 	public String identifyElems(Element[] elems);
+	
+	public String shoutout(int value);
 }

@@ -141,4 +141,45 @@ public final class Container_Stub extends RemoteStub440
 		return null;
 	}
 
+	@Override
+	public String shoutout(int value) {
+		Socket sock;
+		ObjectOutputStream out;
+		ObjectInputStream in;
+		RMIMessage methodRequest = null;
+		Object[] params = new Object[1];
+		params[0] = value;
+		
+		try {
+			methodRequest = new RMIMessage("shoutout", params, super.getObjectKey());
+			sock = new Socket(super.getIP(), super.getPortName());
+			out = new ObjectOutputStream(sock.getOutputStream());
+			in = new ObjectInputStream(sock.getInputStream());	
+			out.writeObject(methodRequest);
+			RMIMessage resultMessage = (RMIMessage)(in.readObject());
+			
+			out.close();
+			in.close();
+			sock.close();
+			
+			Throwable e = resultMessage.getException();
+			if (e != null) {
+				throw e;
+			}
+			
+			return (String) resultMessage.getReturnValue();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.out.println("Result didn't have the right type.");
+			e.printStackTrace();
+		} catch (Throwable e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+
 }

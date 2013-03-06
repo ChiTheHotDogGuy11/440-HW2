@@ -37,7 +37,8 @@ public class ContainerClient {
 		System.out.println("Average: " + container.getAverage(elems));
 		System.out.println("Minimum Element:" + container.minElem(elems).identify());
 		
-		container.minElem(null);
+		System.out.println(container.shoutout(200));
+		container.shoutout(-1);
 		
 	}
 }
