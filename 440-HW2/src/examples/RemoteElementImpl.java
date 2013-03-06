@@ -9,7 +9,7 @@ public class RemoteElementImpl implements RemoteElement {
 	private String identifier;
 
 	public static void main(String[] args) {
-		RMI440 serverInst = new RMI440("128.237.207.225", 1233, "elem1", new RemoteElementImpl(235, "Tyler"));
+		RMI440 serverInst = new RMI440("128.237.207.225", 1233, "elem1", new RemoteElementImpl(236, "Justin"));
 		serverInst.run();
 	}
 	
@@ -27,5 +27,4 @@ public class RemoteElementImpl implements RemoteElement {
 	public String identify() {
 		return ("I am REMOTE element " + identifier + " and my value is " + value);
 	}
-
 }
