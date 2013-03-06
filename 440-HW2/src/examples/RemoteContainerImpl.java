@@ -8,7 +8,7 @@ public class RemoteContainerImpl implements Container{
 		
 	}
 
-	public void main(String[] args) {
+	public static void main(String[] args) {
 		RMI440 serverInst = new RMI440("128.237.207.225", 1233, "container", new RemoteContainerImpl());
 		serverInst.run();
 	}
