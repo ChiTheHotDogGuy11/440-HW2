@@ -15,7 +15,7 @@ public class GoodbyeClient {
 		int port = Integer.parseInt(args[1]);
 		String serviceName = args[2];*/
 		
-		String host = "128.237.185.147";
+		String host = "128.237.207.225";
 		int port = 1233;
 
 		// locate the registry and get ror.
