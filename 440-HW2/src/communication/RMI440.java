@@ -117,8 +117,14 @@ public class RMI440 {
 			
 			//Determines the parameters of the method
 			Object[] parameters = message.getParemeters();
-			Class[] paramClasses = new Class[parameters.length];
+			Class<?>[] paramClasses = message.getParamClasses();
 			for (int i = 0; i < parameters.length; i++) {
+				if (parameters[i] == null) {
+					message.setException(new NullPointerException("Argument cannot be null!"));
+					exceptionThrown = true;
+					break;
+				}
+				
 				if (parameters[i] instanceof RemoteObjectReference) {
 					RemoteObjectReference paramROR = (RemoteObjectReference)parameters[i];
 					RemoteStub440 newParam = paramROR.localize();
@@ -128,14 +134,6 @@ public class RMI440 {
 					} catch (ClassNotFoundException e) {
 						System.out.println("Class not found.");
 						continue;
-					}
-				} else {
-					if (parameters[i] == null) {
-					  message.setException(new NullPointerException("Argument cannot be null!"));
-					  exceptionThrown = true;
-					  break;
-					} else {
-						paramClasses[i] = parameters[i].getClass();
 					}
 				}
 			}

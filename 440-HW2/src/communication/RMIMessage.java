@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class RMIMessage implements Serializable {
 	private String methodName;
 	private Object[] parameters;
+	private Class<?>[] paramClasses;
 	private int objectKey;
 	private Object returnValue = null;
 	private Throwable exception;
@@ -26,9 +27,10 @@ public class RMIMessage implements Serializable {
 	 * @param parameters - array of objects that are the parameters to the method
 	 * @param objectKey - key of the object on which the method is to be called
 	 */
-	public RMIMessage(String methodName, Object[] parameters, int objectKey) {
+	public RMIMessage(String methodName, Object[] parameters, Class<?>[] paramClasses, int objectKey) {
 		this.methodName = methodName;
 		this.parameters = parameters;
+		this.paramClasses = paramClasses;
 		this.objectKey = objectKey;
 	}
 	
@@ -64,6 +66,14 @@ public class RMIMessage implements Serializable {
 	 */
 	public Object[] getParemeters() {
 		return parameters;
+	}
+	
+	/** getParemClasses() 
+	 * 
+	 * @return Class<?>[] paramClasses
+	 */
+	public Class<?>[] getParamClasses() {
+		return paramClasses;
 	}
 	
 	/** getObjectKey()
