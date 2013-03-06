@@ -17,7 +17,7 @@ public class ContainerClient {
 		/*String host = args[0];
 		int port = Integer.parseInt(args[1]);*/
 		
-		String host = "128.237.198.183";
+		String host = "128.237.207.225";
 		int port = 1233;
 
 		// locate the registry and get ror.
