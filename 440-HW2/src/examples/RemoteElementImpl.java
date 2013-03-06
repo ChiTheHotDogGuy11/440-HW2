@@ -19,7 +19,7 @@ public class RemoteElementImpl implements RemoteElement {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		RMI440 serverInst = new RMI440("128.237.207.225", 1233, "elem1", new RemoteElementImpl(235, "Tyler"));
+		RMI440 serverInst = new RMI440("128.237.207.225", 1233, "elem2", new RemoteElementImpl(236, "Justin"));
 		serverInst.run();
 	}
 	

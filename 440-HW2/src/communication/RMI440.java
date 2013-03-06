@@ -56,7 +56,7 @@ public class RMI440 {
     public void run() {
 		//TODO automate setting of host
 		host = "128.237.114.224";
-		port = 1234;	//hardwired value
+		port = 1236;	//hardwired value
 		
 		//Locate the global registry
 		Registry440 reg = LocateRegistry.getRegistry(regHost, regPort);
@@ -115,16 +115,11 @@ public class RMI440 {
 			int key = message.getObjectKey();
 			Object obj = tbl.findObj(key);
 			
-			//Determines the parameters of the method
 			Object[] parameters = message.getParemeters();
 			Class<?>[] paramClasses = message.getParamClasses();
+			
+			//Determines if parameter is passed byRef
 			for (int i = 0; i < parameters.length; i++) {
-				if (parameters[i] == null) {
-					message.setException(new NullPointerException("Argument cannot be null!"));
-					exceptionThrown = true;
-					break;
-				}
-				
 				if (parameters[i] instanceof RemoteObjectReference) {
 					RemoteObjectReference paramROR = (RemoteObjectReference)parameters[i];
 					RemoteStub440 newParam = paramROR.localize();
