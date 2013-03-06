@@ -56,7 +56,7 @@ public class RMI440 {
     public void run() {
 		//TODO automate setting of host
 		host = "128.237.114.224";
-		port = 1234;	//hardwired value
+		port = 1236;	//hardwired value
 		
 		//Locate the global registry
 		Registry440 reg = LocateRegistry.getRegistry(regHost, regPort);
