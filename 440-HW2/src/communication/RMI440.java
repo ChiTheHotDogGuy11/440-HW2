@@ -135,6 +135,7 @@ public class RMI440 {
 						System.out.println("Class not found.");
 						continue;
 					}
+				}
 			}
 
 			//Uses reflection to obtain method to invoke on the local object
