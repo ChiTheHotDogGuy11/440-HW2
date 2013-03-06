@@ -9,6 +9,7 @@ import java.io.Serializable;
  * @author Tyler Healy - thealy, Justin Greet - jgreet
  *
  */
+@SuppressWarnings("serial")
 public class ElementImpl implements Element, Serializable {
 	private int value;
 	private String identifier;

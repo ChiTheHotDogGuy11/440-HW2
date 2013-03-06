@@ -11,6 +11,7 @@ import communication.RMIMessage;
 import stub.Remote440;
 import stub.RemoteStub440;
 
+@SuppressWarnings("serial")
 public final class RemoteElement_Stub extends RemoteStub440
 	implements Element, Remote440 {
 
@@ -21,7 +22,7 @@ public final class RemoteElement_Stub extends RemoteStub440
 		ObjectInputStream in;
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[0];
-		Class[] classes = new Class[0];
+		Class<?>[] classes = new Class[0];
 		
 		try {
 			methodRequest = new RMIMessage("getValue", params, classes, super.getObjectKey());
@@ -62,7 +63,7 @@ public final class RemoteElement_Stub extends RemoteStub440
 		ObjectInputStream in;
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[0];
-		Class[] classes = new Class[0];
+		Class<?>[] classes = new Class[0];
 		
 		try {
 			methodRequest = new RMIMessage("identify", params, classes, super.getObjectKey());
@@ -95,5 +96,4 @@ public final class RemoteElement_Stub extends RemoteStub440
 		}
 		return null;
 	}
-
 }

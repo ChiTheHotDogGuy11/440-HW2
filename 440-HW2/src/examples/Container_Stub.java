@@ -12,6 +12,7 @@ import references.RemoteObjectReference;
 import stub.Remote440;
 import stub.RemoteStub440;
 
+@SuppressWarnings("serial")
 public final class Container_Stub extends RemoteStub440 
 	implements Container, Remote440 {
 
@@ -23,7 +24,7 @@ public final class Container_Stub extends RemoteStub440
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[1];
 		params[0] = elems;
-		Class[] classes = new Class[1];
+		Class<?>[] classes = new Class[1];
 		classes[0] = elems.getClass();
 		
 		try {
@@ -66,7 +67,7 @@ public final class Container_Stub extends RemoteStub440
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[1];
 		params[0] = elems;
-		Class[] classes = new Class[1];
+		Class<?>[] classes = new Class[1];
 		classes[0] = elems.getClass();
 		
 		try {
@@ -112,7 +113,7 @@ public final class Container_Stub extends RemoteStub440
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[1];
 		params[0] = elems;
-		Class[] classes = new Class[1];
+		Class<?>[] classes = new Class[1];
 		classes[0] = elems.getClass();
 		
 		try {
@@ -155,7 +156,7 @@ public final class Container_Stub extends RemoteStub440
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[1];
 		params[0] = new Integer(value);
-		Class[] classes = new Class[1];
+		Class<?>[] classes = new Class[1];
 		classes[0] = int.class;
 		
 		try {
@@ -189,5 +190,4 @@ public final class Container_Stub extends RemoteStub440
 		}
 		return null;
 	}
-
 }
