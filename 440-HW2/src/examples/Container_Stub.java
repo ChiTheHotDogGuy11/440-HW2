@@ -148,7 +148,7 @@ public final class Container_Stub extends RemoteStub440
 		ObjectInputStream in;
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[1];
-		params[0] = value;
+		params[0] = new Integer(value);
 		
 		try {
 			methodRequest = new RMIMessage("shoutout", params, super.getObjectKey());
