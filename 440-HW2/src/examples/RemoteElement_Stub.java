@@ -21,9 +21,10 @@ public final class RemoteElement_Stub extends RemoteStub440
 		ObjectInputStream in;
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[0];
+		Class[] classes = new Class[0];
 		
 		try {
-			methodRequest = new RMIMessage("getValue", params, super.getObjectKey());
+			methodRequest = new RMIMessage("getValue", params, classes, super.getObjectKey());
 			sock = new Socket(super.getIP(), super.getPortName());
 			out = new ObjectOutputStream(sock.getOutputStream());
 			in = new ObjectInputStream(sock.getInputStream());	
@@ -61,9 +62,10 @@ public final class RemoteElement_Stub extends RemoteStub440
 		ObjectInputStream in;
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[0];
+		Class[] classes = new Class[0];
 		
 		try {
-			methodRequest = new RMIMessage("identify", params, super.getObjectKey());
+			methodRequest = new RMIMessage("identify", params, classes, super.getObjectKey());
 			sock = new Socket(super.getIP(), super.getPortName());
 			out = new ObjectOutputStream(sock.getOutputStream());
 			in = new ObjectInputStream(sock.getInputStream());	

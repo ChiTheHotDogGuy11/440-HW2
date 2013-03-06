@@ -23,9 +23,11 @@ public final class Container_Stub extends RemoteStub440
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[1];
 		params[0] = elems;
+		Class[] classes = new Class[1];
+		classes[0] = elems.getClass();
 		
 		try {
-			methodRequest = new RMIMessage("getAverage", params, super.getObjectKey());
+			methodRequest = new RMIMessage("getAverage", params, classes, super.getObjectKey());
 			sock = new Socket(super.getIP(), super.getPortName());
 			out = new ObjectOutputStream(sock.getOutputStream());
 			in = new ObjectInputStream(sock.getInputStream());	
@@ -63,10 +65,12 @@ public final class Container_Stub extends RemoteStub440
 		ObjectInputStream in;
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[1];
-		params[0] = (Element[])elems;
+		params[0] = elems;
+		Class[] classes = new Class[1];
+		classes[0] = elems.getClass();
 		
 		try {
-			methodRequest = new RMIMessage("minElem", params, super.getObjectKey());
+			methodRequest = new RMIMessage("minElem", params, classes, super.getObjectKey());
 			sock = new Socket(super.getIP(), super.getPortName());
 			out = new ObjectOutputStream(sock.getOutputStream());
 			in = new ObjectInputStream(sock.getInputStream());	
@@ -108,9 +112,11 @@ public final class Container_Stub extends RemoteStub440
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[1];
 		params[0] = elems;
+		Class[] classes = new Class[1];
+		classes[0] = elems.getClass();
 		
 		try {
-			methodRequest = new RMIMessage("identifyElems", params, super.getObjectKey());
+			methodRequest = new RMIMessage("identifyElems", params, classes, super.getObjectKey());
 			sock = new Socket(super.getIP(), super.getPortName());
 			out = new ObjectOutputStream(sock.getOutputStream());
 			in = new ObjectInputStream(sock.getInputStream());	
@@ -149,9 +155,11 @@ public final class Container_Stub extends RemoteStub440
 		RMIMessage methodRequest = null;
 		Object[] params = new Object[1];
 		params[0] = new Integer(value);
+		Class[] classes = new Class[1];
+		classes[0] = int.class;
 		
 		try {
-			methodRequest = new RMIMessage("shoutout", params, super.getObjectKey());
+			methodRequest = new RMIMessage("shoutout", params, classes, super.getObjectKey());
 			sock = new Socket(super.getIP(), super.getPortName());
 			out = new ObjectOutputStream(sock.getOutputStream());
 			in = new ObjectInputStream(sock.getInputStream());	
